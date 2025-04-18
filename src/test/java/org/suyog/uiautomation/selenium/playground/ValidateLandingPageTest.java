@@ -4,15 +4,19 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
+import org.suyog.uiautomation.pages.LandingPage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 class ValidateLandingPageTest {
-    static WebDriver driver;
+    private WebDriver driver;
+    private LandingPage landingPage;
+
     @BeforeEach
     void setup() {
-        driver = OpenWebPage.testGoogleSearch();
+        this.driver = OpenWebPage.setUp();
     }
 
     @AfterEach
@@ -26,9 +30,9 @@ class ValidateLandingPageTest {
     }
 
     @Test
-    void validatePageElements() {
-        WebElement centerText= driver.findElement(By.xpath("//h1[text()='Selenium Playground']"));
-        Assertions.assertEquals("Selenium Playground", centerText.getText(), "Validating landing page center header: ");
-    }
+    public void validatePageHeaderElements() {
+        landingPage = PageFactory.initElements(driver, LandingPage.class);
 
+        Assertions.assertEquals("Selenium Playground", landingPage.CenterText(), "Validating landing page center header: ");
+    }
 }
